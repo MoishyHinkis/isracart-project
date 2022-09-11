@@ -32,37 +32,41 @@ const showingNavigationDropdown = ref(false);
                                 class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex"
                             >
                                 <BreezeNavLink
-                                    :href="route('posts.index')"
-                                    :active="
-                                        route().current('posts.index', {
-                                            user_id: null,
-                                        })
-                                    "
-                                >
-                                    Feed
-                                </BreezeNavLink>
-                                <BreezeNavLink
-                                    v-if="$page.props.auth.user"
-                                    :href="
-                                        route('posts.index', {
-                                            user_id: $page.props.auth.user?.id,
-                                        })
-                                    "
-                                    :active="
-                                        route().current('posts.index', {
-                                            user_id: $page.props.auth.user?.id,
-                                        })
-                                    "
-                                >
-                                    Manage your posts
-                                </BreezeNavLink>
-                                <BreezeNavLink
                                     v-if="$page.props.auth.user?.is_admin"
                                     :href="route('admin.panel')"
                                     :active="route().current('admin.panel')"
                                 >
                                     Admin panel
                                 </BreezeNavLink>
+                                <template v-else>
+                                    <BreezeNavLink
+                                        :href="route('posts.index')"
+                                        :active="
+                                            route().current('posts.index', {
+                                                user_id: null,
+                                            })
+                                        "
+                                    >
+                                        Feed
+                                    </BreezeNavLink>
+                                    <BreezeNavLink
+                                        v-if="$page.props.auth.user"
+                                        :href="
+                                            route('posts.index', {
+                                                user_id:
+                                                    $page.props.auth.user?.id,
+                                            })
+                                        "
+                                        :active="
+                                            route().current('posts.index', {
+                                                user_id:
+                                                    $page.props.auth.user?.id,
+                                            })
+                                        "
+                                    >
+                                        Manage your posts
+                                    </BreezeNavLink>
+                                </template>
                             </div>
                         </div>
 
@@ -182,37 +186,39 @@ const showingNavigationDropdown = ref(false);
                 >
                     <div class="pt-2 pb-3 space-y-1">
                         <BreezeResponsiveNavLink
-                            :href="route('posts.index')"
-                            :active="
-                                route().current('posts.index', {
-                                    user_id: null,
-                                })
-                            "
-                        >
-                            feed
-                        </BreezeResponsiveNavLink>
-                        <BreezeResponsiveNavLink
-                            v-if="$page.props.auth.user"
-                            :href="
-                                route('posts.index', {
-                                    user_id: $page.props.auth.user?.id,
-                                })
-                            "
-                            :active="
-                                route().current('posts.index', {
-                                    user_id: $page.props.auth.user?.id,
-                                })
-                            "
-                        >
-                            manage your posts
-                        </BreezeResponsiveNavLink>
-                        <BreezeResponsiveNavLink
                             v-if="$page.props.auth.user?.is_admin"
                             :href="route('admin.panel')"
                             :active="route().current('admin.panel')"
                         >
                             Admin panel
                         </BreezeResponsiveNavLink>
+                        <template v-else>
+                            <BreezeResponsiveNavLink
+                                :href="route('posts.index')"
+                                :active="
+                                    route().current('posts.index', {
+                                        user_id: null,
+                                    })
+                                "
+                            >
+                                feed
+                            </BreezeResponsiveNavLink>
+                            <BreezeResponsiveNavLink
+                                v-if="$page.props.auth.user"
+                                :href="
+                                    route('posts.index', {
+                                        user_id: $page.props.auth.user?.id,
+                                    })
+                                "
+                                :active="
+                                    route().current('posts.index', {
+                                        user_id: $page.props.auth.user?.id,
+                                    })
+                                "
+                            >
+                                manage your posts
+                            </BreezeResponsiveNavLink>
+                        </template>
                     </div>
 
                     <!-- Responsive Settings Options -->

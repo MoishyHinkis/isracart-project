@@ -1,6 +1,6 @@
 <script setup>
 import BreezeAuthenticatedLayout from "@/Layouts/Authenticated.vue";
-import { Head, Link, useForm } from "@inertiajs/inertia-vue3";
+import { Head, useForm } from "@inertiajs/inertia-vue3";
 import BreezeButton from "@/Components/Button.vue";
 import BreezeInput from "@/Components/Input.vue";
 import BreezeInputError from "@/Components/InputError.vue";
@@ -12,7 +12,7 @@ import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 import { QuillEditor } from "@vueup/vue-quill";
 import "@vueup/vue-quill/dist/vue-quill.snow.css";
 
-const { post } = defineProps({ post: Object });
+const { post } = defineProps({ post: Object,  });
 
 const form = useForm({
     text: post?.text ?? "",
@@ -42,8 +42,7 @@ const addPost = () => {
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                    <div class="p-6 bg-white border-b border-gray-200">
-                    </div>
+                    <div class="p-6 bg-white border-b border-gray-200"></div>
                     <div class="flex justify-center min-h-screen">
                         <form
                             @submit.prevent="addPost"
@@ -60,10 +59,10 @@ const addPost = () => {
                                 />
                                 <BreezeInputError
                                     class="mt-2"
-                                    :message="form.errors.email"
+                                    :message="form.errors.text"
                                 />
                             </div>
-                            <div class="pt-20">
+                            <div class="pt-28">
                                 <BreezeLabel for="media" value="Media" />
                                 <BreezeInput
                                     id="media"
@@ -89,14 +88,18 @@ const addPost = () => {
                             </div>
                             <div class="flex items-center justify-between mt-4">
                                 <BreezeButton
-                                    type="submit"
-                                    class="ml-4"
-                                    :class="{ 'opacity-25': form.processing }"
-                                    :disabled="form.processing"
-                                    >{{
-                                        post ? "edit" : "create"
-                                    }}</BreezeButton
+                                type="submit"
+                                class="ml-4"
+                                :class="{ 'opacity-25': form.processing }"
+                                :disabled="form.processing"
+                                >{{
+                                    post ? "edit" : "create"
+                                }}</BreezeButton
                                 >
+                                <BreezeInputError
+                                    class="mt-2"
+                                    :message="form.errors.is_admin"
+                                />
                             </div>
                         </form>
                     </div>
