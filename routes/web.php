@@ -17,30 +17,20 @@ use Inertia\Inertia;
 |
 */
 
-// Route::get('/', function () {
-//     return Inertia::render('Welcome', [
-//         'canLogin' => Route::has('login'),
-//         'canRegister' => Route::has('register'),
-//         'laravelVersion' => Application::VERSION,
-//         'phpVersion' => PHP_VERSION,
-//     ]);
-// });
-Route::middleware('noAdmin')->group(function () {
-
-    Route::any('/', function () {
-        return redirect()->route('posts.index');
+Route::any('/', function () {
+    return redirect()->route(auth('admin')->check() ? 'admin.panel' :
+        'posts.index');
+});
+Route::resource('posts', PostController::class)->only('index')->middleware('guest:admin');
+Route::middleware('auth:web')->group(function () {
+    Route::resource('posts', PostController::class)->except('index', 'show');
+    Route::prefix('user')->name('user.')->group(function () {
+        Route::get('posts', [UserController::class, 'posts'])->name('posts');
     });
-    Route::resource('posts', PostController::class)->only('index');
-    Route::middleware('auth')->group(function () {
-        Route::resource('posts', PostController::class)->except('index');
-        Route::prefix('user')->name('user.')->group(function () {
-            Route::get('posts', [UserController::class, 'posts'])->name('posts');
-        });
 
-        Route::get('/interface', function () {
-            return Inertia::render('Interface');
-        })->middleware(['auth', 'verified'])->name('interface');
-    });
+    Route::get('/interface', function () {
+        return Inertia::render('Interface');
+    })->name('interface');
 });
 
 

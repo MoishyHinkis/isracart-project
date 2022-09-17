@@ -98,7 +98,7 @@ const addPost = () => {
                                 >
                                 <BreezeInputError
                                     class="mt-2"
-                                    :message="form.errors.is_admin"
+                                    :message="form.errors.isAdmin"
                                 />
                             </div>
                         </form>

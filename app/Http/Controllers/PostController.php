@@ -25,7 +25,6 @@ class PostController extends Controller
             'text' => 'required|string',
             'media' => ''
         ]);
-        validator(['is_admin' => $request->user()->is_admin], ['is_admin' => 'in:false'], ['is_admin.in' => "admin can't create hes own posts"])->validate();
         $request->user()->posts()->create(
             $data
 

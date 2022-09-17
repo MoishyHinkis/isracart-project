@@ -32,7 +32,7 @@ const showingNavigationDropdown = ref(false);
                                 class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex"
                             >
                                 <BreezeNavLink
-                                    v-if="$page.props.auth.user?.is_admin"
+                                    v-if="$page.props.auth.user?.isAdmin"
                                     :href="route('admin.panel')"
                                     :active="route().current('admin.panel')"
                                 >
@@ -186,7 +186,7 @@ const showingNavigationDropdown = ref(false);
                 >
                     <div class="pt-2 pb-3 space-y-1">
                         <BreezeResponsiveNavLink
-                            v-if="$page.props.auth.user?.is_admin"
+                            v-if="$page.props.auth.user?.isAdmin"
                             :href="route('admin.panel')"
                             :active="route().current('admin.panel')"
                         >

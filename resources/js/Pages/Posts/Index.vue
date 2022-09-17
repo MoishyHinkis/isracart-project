@@ -50,7 +50,7 @@ const onDelete = (id) => {
                                 <span
                                     v-if="
                                         user.id === auth.user?.id ||
-                                        auth.user?.is_admin
+                                        auth.user?.isAdmin
                                     "
                                     class="flex gap-4"
                                 >
