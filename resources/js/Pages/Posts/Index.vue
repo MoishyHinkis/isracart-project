@@ -10,9 +10,6 @@ defineProps({ auth: Object, posts: Object });
 const onEdit = (id) => {
     Inertia.get(route("posts.edit", id));
 };
-const onDelete = (id) => {
-    Inertia.delete(route("posts.destroy", id));
-};
 </script>
 <template>
     <Head title="posts" />
@@ -42,7 +39,7 @@ const onDelete = (id) => {
                             <div class="flex flex-row-reverse justify-between">
                                 <p class="text-end">
                                     {{
-                                        user.id === auth.user?.id
+                                        user.id === auth.user?.id && !auth.user.isAdmin
                                             ? "you"
                                             : user?.name
                                     }}
@@ -54,9 +51,12 @@ const onDelete = (id) => {
                                     "
                                     class="flex gap-4"
                                 >
-                                    <button @click="onDelete(id)">
+                                    <Link
+                                        :href="route('posts.destroy', id)"
+                                        method="delete"
+                                    >
                                         <fontAwesomeIcon :icon="faTrashCan" />
-                                    </button>
+                                    </Link>
                                     <button @click="onEdit(id)">
                                         <fontAwesomeIcon :icon="faEdit" />
                                     </button>

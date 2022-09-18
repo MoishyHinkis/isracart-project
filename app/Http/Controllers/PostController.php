@@ -39,6 +39,11 @@ class PostController extends Controller
 
     public function update(Request $request, Post $post)
     {
+        $user = $request->user() ?? auth('admin')->user();
+        if ($post->user_id !== $user->id && !$user->isAdmin) {
+            return response(401);
+        }
+
         $data = $request->validate([
             'text' => 'required|string',
             'media' => ''
@@ -49,6 +54,10 @@ class PostController extends Controller
 
     public function destroy(Request $request, Post $post)
     {
+        $user = $request->user() ?? auth('admin')->user();
+        if ($post->user_id !== $user->id && !$user->isAdmin) {
+            return response(401);
+        }
         $post->delete();
         return redirect()->route('posts.index');
     }

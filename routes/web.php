@@ -22,16 +22,18 @@ Route::any('/', function () {
         'posts.index');
 });
 Route::resource('posts', PostController::class)->only('index')->middleware('guest:admin');
+Route::resource('posts', PostController::class)->only('edit', 'destroy', 'update')->middleware('auth:web,admin');
 Route::middleware('auth:web')->group(function () {
-    Route::resource('posts', PostController::class)->except('index', 'show');
+    Route::resource('posts', PostController::class)->only('store', 'create');
     Route::prefix('user')->name('user.')->group(function () {
         Route::get('posts', [UserController::class, 'posts'])->name('posts');
     });
-
     Route::get('/interface', function () {
         return Inertia::render('Interface');
     })->name('interface');
 });
+
+
 
 
 require __DIR__ . '/auth.php';
